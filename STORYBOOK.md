@@ -103,6 +103,7 @@ Storybook packages installed at root:
 - **CSS Compilation**: Storybook uses compiled CSS from `packages/*/lib/css/` directories. Run `pnpm compile` to generate these before starting Storybook.
 - **Story Exclusion**: Story files (`*.stories.tsx`) are excluded from package TypeScript compilation via `exclude` patterns in package tsconfig.json files.
 - **Workspace Resolution**: Blueprint packages are resolved via pnpm workspace protocol
+- **CI Artifact**: Storybook is built during the `dist` CircleCI job and linked in PR preview comments alongside other Blueprint artifacts
 
 ## Troubleshooting
 
