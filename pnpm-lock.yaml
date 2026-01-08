@@ -109,9 +109,6 @@ importers:
         specifier: ^17.7.2
         version: 17.7.2
     devDependencies:
-      '@babel/runtime':
-        specifier: ^7.28.4
-        version: 7.28.4
       '@storybook/addon-docs':
         specifier: ^10.1.10
         version: 10.1.10(@types/react@18.3.12)(esbuild@0.25.11)(rollup@4.52.5)(storybook@10.1.10(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@7.1.12(@types/node@24.10.0)(jiti@2.6.1)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))(webpack@5.102.1(@swc/core@1.13.20)(esbuild@0.25.11))

@@ -84,7 +84,6 @@
     "author": "Palantir Technologies",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@babel/runtime": "^7.28.4",
         "@storybook/addon-docs": "^10.1.10",
         "@storybook/addon-links": "^10.1.10",
         "@storybook/icons": "^1.6.0",
