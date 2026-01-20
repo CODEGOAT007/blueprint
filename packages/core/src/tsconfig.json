@@ -3,5 +3,6 @@
     "compilerOptions": {
         "outDir": "../lib/esm",
         "skipLibCheck": true
-    }
+    },
+    "exclude": ["**/*.test.ts", "**/*.test.tsx"]
 }
