@@ -18,11 +18,7 @@ import { mount, type ReactWrapper } from "enzyme";
 import { spy } from "sinon";
 import { afterEach, assert, beforeEach, describe, test as it } from "vitest";
 
-import {
-    OverflowList,
-    type OverflowListProps,
-    type OverflowListState,
-} from "../overflow-list/overflowList";
+import { OverflowList, type OverflowListProps, type OverflowListState } from "../overflow-list/overflowList";
 
 type OverflowProps = OverflowListProps<TestItemProps>;
 
