@@ -17,7 +17,8 @@
 import { mount, type ReactWrapper } from "enzyme";
 import { createRef } from "react";
 import { spy } from "sinon";
-import { afterAll as after, afterEach, assert, describe, test as it } from "vitest";
+
+import { after, afterEach, assert, describe, it } from "@blueprintjs/test-commons";
 
 import { ResizeSensor, type ResizeSensorProps } from "../resize-sensor/resizeSensor";
 import { sleep } from "../../../test/utils";

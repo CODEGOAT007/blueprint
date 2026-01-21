@@ -17,11 +17,10 @@
 import { render, screen } from "@testing-library/react";
 import { useMemo } from "react";
 import { type SinonStub, spy, stub } from "sinon";
-import { afterAll as after, afterEach, beforeAll as before, describe, expect, test as it } from "vitest";
 
 // N.B. { fireEvent } from "@testing-library/react" does not generate "real" enough events which
 // work with our hotkey parser implementation (worth investigating...)
-import { dispatchVitestKeyboardEvent } from "@blueprintjs/test-commons";
+import { after, afterEach, before, describe, dispatchVitestKeyboardEvent, expect, it } from "@blueprintjs/test-commons";
 
 import { InputGroup } from "../../src/components/forms/inputGroup";
 import { HotkeysProvider } from "../../src/context";

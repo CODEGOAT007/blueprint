@@ -25,9 +25,16 @@ import { waitFor } from "@testing-library/dom";
 import { mount, type ReactWrapper, shallow } from "enzyme";
 import { createRef } from "react";
 import { spy } from "sinon";
-import { afterAll as after, afterEach, assert, beforeEach, describe, test as it } from "vitest";
 
-import { dispatchVitestMouseEvent } from "@blueprintjs/test-commons";
+import {
+    after,
+    afterEach,
+    assert,
+    beforeEach,
+    describe,
+    dispatchVitestMouseEvent,
+    it,
+} from "@blueprintjs/test-commons";
 
 import { Classes, Overlay, type OverlayProps, Portal, Utils } from "../../";
 import { findInPortal, sleep } from "../../../test/utils";

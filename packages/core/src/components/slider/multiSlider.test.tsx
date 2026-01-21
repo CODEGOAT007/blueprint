@@ -16,9 +16,8 @@
 
 import { mount, type ReactWrapper } from "enzyme";
 import sinon from "sinon";
-import { afterEach, assert, beforeEach, describe, test as it } from "vitest";
 
-import { expectPropValidationError } from "@blueprintjs/test-commons";
+import { afterEach, assert, beforeEach, describe, expectPropValidationError, it } from "@blueprintjs/test-commons";
 
 import { Classes, MultiSlider, type MultiSliderProps } from "../../";
 import { Handle } from "../slider/handle";

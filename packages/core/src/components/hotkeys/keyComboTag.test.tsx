@@ -15,7 +15,8 @@
  */
 
 import { render, screen } from "@testing-library/react";
-import { describe, expect, test as it } from "vitest";
+
+import { describe, expect, it } from "@blueprintjs/test-commons";
 
 import { KeyComboTagInternal } from "../hotkeys/keyComboTag";
 

@@ -15,7 +15,8 @@
  */
 
 import { mount, type ReactWrapper } from "enzyme";
-import { afterEach, assert, beforeEach, describe, test as it } from "vitest";
+
+import { afterEach, assert, beforeEach, describe, it } from "@blueprintjs/test-commons";
 
 import { Classes, Portal, type PortalProps, PortalProvider } from "../../";
 

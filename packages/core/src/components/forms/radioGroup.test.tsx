@@ -17,7 +17,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { spy, stub } from "sinon";
-import { describe, expect, test as it } from "vitest";
+
+import { describe, expect, it } from "@blueprintjs/test-commons";
 
 import { Classes, type OptionProps, Radio, RadioGroup } from "../../";
 import { RADIOGROUP_WARN_CHILDREN_OPTIONS_MUTEX } from "../../common/errors";

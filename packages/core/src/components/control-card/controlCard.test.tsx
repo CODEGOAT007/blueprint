@@ -17,7 +17,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { spy } from "sinon";
-import { describe, expect, test as it } from "vitest";
+
+import { describe, expect, it } from "@blueprintjs/test-commons";
 
 import { CheckboxCard, Classes, RadioCard, RadioGroup, SwitchCard } from "../../";
 import { hasClass } from "../../../test/utils";
