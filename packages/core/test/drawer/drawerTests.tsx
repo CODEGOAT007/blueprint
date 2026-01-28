@@ -14,194 +14,196 @@
  * limitations under the License.
  */
 
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { assert } from "chai";
-import { mount, type ReactWrapper } from "enzyme";
 import { spy } from "sinon";
 
-import { Button, Classes, Drawer, type DrawerProps, Position } from "../../src";
+import { Button, Classes, Drawer, Position } from "../../src";
+import { hasClass } from "../utils";
 
 describe("<Drawer>", () => {
-    let drawer: ReactWrapper<DrawerProps, any>;
-    let isMounted = false;
-    const containerElement = document.createElement("div");
-    document.documentElement.appendChild(containerElement);
-
-    /**
-     * Mount the `content` into `containerElement` and assign to local `wrapper` variable.
-     * Use this method in this suite instead of Enzyme's `mount` method.
-     */
-    function mountDrawer(content: React.JSX.Element) {
-        drawer = mount(content, { attachTo: containerElement });
-        isMounted = true;
-        return drawer;
-    }
-
-    afterEach(() => {
-        if (isMounted) {
-            // clean up wrapper after each test, if it was used
-            drawer?.unmount();
-            drawer?.detach();
-            isMounted = false;
-        }
-    });
-
     it("renders its content correctly", () => {
-        mountDrawer(
+        const { container, baseElement } = render(
             <Drawer isOpen={true} usePortal={false}>
                 {createDrawerContents()}
             </Drawer>,
         );
-        [Classes.DRAWER, Classes.DRAWER_BODY, Classes.DRAWER_FOOTER, Classes.OVERLAY_BACKDROP].forEach(className => {
-            assert.lengthOf(drawer.find(`.${className}`), 1, `missing ${className}`);
+        [Classes.DRAWER, Classes.DRAWER_BODY, Classes.DRAWER_FOOTER].forEach(className => {
+            const element = container.querySelector(`.${className}`);
+            assert.isNotNull(element, `missing ${className}`);
         });
+        // Backdrop renders to baseElement (document.body)
+        const backdrop = baseElement.querySelector(`.${Classes.OVERLAY_BACKDROP}`);
+        assert.isNotNull(backdrop, `missing ${Classes.OVERLAY_BACKDROP}`);
     });
 
     describe("position", () => {
         describe("RIGHT", () => {
             it("position right, size becomes width", () => {
-                mountDrawer(
+                const { container } = render(
                     <Drawer isOpen={true} usePortal={false} position={Position.RIGHT} size={100}>
                         {createDrawerContents()}
                     </Drawer>,
                 );
-                assert.equal(drawer.find(`.${Classes.DRAWER}`).prop("style")?.width, 100);
+                const drawer = container.querySelector<HTMLElement>(`.${Classes.DRAWER}`);
+                assert.isNotNull(drawer);
+                assert.equal(drawer!.style.width, "100px");
             });
 
             it("position right, adds appropriate classes (default behavior)", () => {
-                mountDrawer(
+                const { container } = render(
                     <Drawer isOpen={true} usePortal={false} position={Position.RIGHT}>
                         {createDrawerContents()}
                     </Drawer>,
                 );
-                assert.isTrue(drawer.find(`.${Classes.POSITION_RIGHT}`).exists());
+                const element = container.querySelector(`.${Classes.POSITION_RIGHT}`);
+                assert.isNotNull(element);
             });
         });
 
         describe("TOP", () => {
             it("position top, size becomes height", () => {
-                mountDrawer(
+                const { container } = render(
                     <Drawer isOpen={true} usePortal={false} position={Position.TOP} size={100}>
                         {createDrawerContents()}
                     </Drawer>,
                 );
-                assert.equal(drawer.find(`.${Classes.DRAWER}`).prop("style")?.height, 100);
+                const drawer = container.querySelector<HTMLElement>(`.${Classes.DRAWER}`);
+                assert.isNotNull(drawer);
+                assert.equal(drawer!.style.height, "100px");
             });
 
             it("position top, adds appropriate classes (vertical, reverse)", () => {
-                mountDrawer(
+                const { container } = render(
                     <Drawer isOpen={true} usePortal={false} position={Position.TOP}>
                         {createDrawerContents()}
                     </Drawer>,
                 );
-                assert.isTrue(drawer.find(`.${Classes.POSITION_TOP}`).exists());
+                const element = container.querySelector(`.${Classes.POSITION_TOP}`);
+                assert.isNotNull(element);
             });
         });
 
         describe("BOTTOM", () => {
             it("position bottom, size becomes height", () => {
-                mountDrawer(
+                const { container } = render(
                     <Drawer isOpen={true} usePortal={false} position={Position.BOTTOM} size={100}>
                         {createDrawerContents()}
                     </Drawer>,
                 );
-                assert.equal(drawer.find(`.${Classes.DRAWER}`).prop("style")?.height, 100);
+                const drawer = container.querySelector<HTMLElement>(`.${Classes.DRAWER}`);
+                assert.isNotNull(drawer);
+                assert.equal(drawer!.style.height, "100px");
             });
 
             it("position bottom, adds appropriate classes (vertical)", () => {
-                mountDrawer(
+                const { container } = render(
                     <Drawer isOpen={true} usePortal={false} position={Position.BOTTOM}>
                         {createDrawerContents()}
                     </Drawer>,
                 );
-                assert.isTrue(drawer.find(`.${Classes.POSITION_BOTTOM}`).exists());
+                const element = container.querySelector(`.${Classes.POSITION_BOTTOM}`);
+                assert.isNotNull(element);
             });
         });
 
         describe("LEFT", () => {
             it("position left, size becomes width", () => {
-                mountDrawer(
+                const { container } = render(
                     <Drawer isOpen={true} usePortal={false} position={Position.LEFT} size={100}>
                         {createDrawerContents()}
                     </Drawer>,
                 );
-                assert.equal(drawer.find(`.${Classes.DRAWER}`).prop("style")?.width, 100);
+                const drawer = container.querySelector<HTMLElement>(`.${Classes.DRAWER}`);
+                assert.isNotNull(drawer);
+                assert.equal(drawer!.style.width, "100px");
             });
 
             it("position left, adds appropriate classes (reverse)", () => {
-                mountDrawer(
+                const { container } = render(
                     <Drawer isOpen={true} usePortal={false} position={Position.LEFT}>
                         {createDrawerContents()}
                     </Drawer>,
                 );
-                assert.isTrue(drawer.find(`.${Classes.POSITION_LEFT}`).exists());
+                const element = container.querySelector(`.${Classes.POSITION_LEFT}`);
+                assert.isNotNull(element);
             });
         });
     });
 
     it("size becomes width", () => {
-        mountDrawer(
+        const { container } = render(
             <Drawer isOpen={true} usePortal={false} size={100}>
                 {createDrawerContents()}
             </Drawer>,
         );
-        assert.equal(drawer.find(`.${Classes.DRAWER}`).prop("style")?.width, 100);
+        const drawer = container.querySelector<HTMLElement>(`.${Classes.DRAWER}`);
+        assert.isNotNull(drawer);
+        assert.equal(drawer!.style.width, "100px");
     });
 
     it("portalClassName appears on Portal", () => {
         const TEST_CLASS = "test-class";
-        mountDrawer(
+        render(
             <Drawer isOpen={true} portalClassName={TEST_CLASS}>
                 {createDrawerContents()}
             </Drawer>,
         );
-        assert.isDefined(document.querySelector(`.${Classes.PORTAL}.${TEST_CLASS}`));
+        const portal = document.querySelector(`.${Classes.PORTAL}.${TEST_CLASS}`);
+        assert.isDefined(portal);
     });
 
-    it("renders contents to specified container correctly", () => {
+    it("renders contents to specified container correctly", async () => {
         const container = document.createElement("div");
         document.body.appendChild(container);
-        mountDrawer(
+        const { unmount } = render(
             <Drawer isOpen={true} portalContainer={container}>
                 {createDrawerContents()}
             </Drawer>,
         );
-        drawer.unmount();
+        unmount();
         document.body.removeChild(container);
+
         const onClose = spy();
-        mountDrawer(
+        const { baseElement } = render(
             <Drawer isOpen={true} onClose={onClose} usePortal={false}>
                 {createDrawerContents()}
             </Drawer>,
         );
-        drawer.find(`.${Classes.OVERLAY_BACKDROP}`).simulate("mousedown");
+        const backdrop = baseElement.querySelector<HTMLElement>(`.${Classes.OVERLAY_BACKDROP}`);
+        assert.isNotNull(backdrop);
+        await userEvent.click(backdrop!);
         assert.isTrue(onClose.calledOnce);
     });
 
-    it("doesn't close when canOutsideClickClose=false and overlay backdrop element is moused down", () => {
+    it("doesn't close when canOutsideClickClose=false and overlay backdrop element is moused down", async () => {
         const onClose = spy();
-        mountDrawer(
+        const { baseElement } = render(
             <Drawer canOutsideClickClose={false} isOpen={true} onClose={onClose} usePortal={false}>
                 {createDrawerContents()}
             </Drawer>,
         );
-        drawer.find(`.${Classes.OVERLAY_BACKDROP}`).simulate("mousedown");
+        const backdrop = baseElement.querySelector<HTMLElement>(`.${Classes.OVERLAY_BACKDROP}`);
+        assert.isNotNull(backdrop);
+        await userEvent.click(backdrop!);
         assert.isTrue(onClose.notCalled);
     });
 
-    it("doesn't close when canEscapeKeyClose=false and escape key is pressed", () => {
+    it("doesn't close when canEscapeKeyClose=false and escape key is pressed", async () => {
         const onClose = spy();
-        mountDrawer(
+        render(
             <Drawer canEscapeKeyClose={false} isOpen={true} onClose={onClose} usePortal={false}>
                 {createDrawerContents()}
             </Drawer>,
         );
-        drawer.simulate("keydown", { key: "Escape" });
+        await userEvent.keyboard("{Escape}");
         assert.isTrue(onClose.notCalled);
     });
 
     it("supports overlay lifecycle props", () => {
         const onOpening = spy();
-        mountDrawer(
+        render(
             <Drawer isOpen={true} onOpening={onOpening}>
                 body
             </Drawer>,
@@ -211,50 +213,52 @@ describe("<Drawer>", () => {
 
     describe("header", () => {
         it(`does not render .${Classes.DRAWER_HEADER} if title omitted`, () => {
-            mountDrawer(
+            const { container } = render(
                 <Drawer isOpen={true} usePortal={false}>
                     drawer body
                 </Drawer>,
             );
-            assert.isFalse(drawer.find(`.${Classes.DRAWER_HEADER}`).exists());
+            const header = container.querySelector(`.${Classes.DRAWER_HEADER}`);
+            assert.isNull(header);
         });
 
         it(`renders .${Classes.DRAWER_HEADER} if title prop is given`, () => {
-            mountDrawer(
+            render(
                 <Drawer isOpen={true} title="Hello!" usePortal={false}>
                     drawer body
                 </Drawer>,
             );
-            assert.match(drawer.find(`.${Classes.DRAWER_HEADER}`).text(), /^Hello!/);
+            const heading = screen.getByText("Hello!");
+            const header = heading.parentElement!;
+            assert.isTrue(hasClass(header, Classes.DRAWER_HEADER));
         });
 
-        it(`renders close button if isCloseButtonShown={true}`, () => {
-            mountDrawer(
-                <Drawer isCloseButtonShown={true} isOpen={true} title="Hello!" usePortal={false}>
-                    drawer body
-                </Drawer>,
-            );
-            assert.lengthOf(drawer.find(`.${Classes.DRAWER_HEADER}`).find(Button), 1);
-
-            drawer.setProps({ isCloseButtonShown: false });
-            assert.lengthOf(drawer.find(`.${Classes.DRAWER_HEADER}`).find(Button), 0);
-        });
-
-        it("clicking close button triggers onClose", () => {
+        it("clicking close button triggers onClose", async () => {
             const onClose = spy();
-            mountDrawer(
-                <Drawer isCloseButtonShown={true} isOpen={true} onClose={onClose} title="Hello!" usePortal={false}>
+            render(
+                <Drawer isOpen={true} title="Hello!" onClose={onClose} usePortal={false}>
                     drawer body
                 </Drawer>,
             );
-            drawer.find(`.${Classes.DRAWER_HEADER}`).find(Button).simulate("click");
-            assert.isTrue(onClose.calledOnce, "onClose not called");
+            const closeButton = screen.getByRole("button", { name: "Close" });
+            await userEvent.click(closeButton);
+            assert.isTrue(onClose.calledOnce);
+        });
+
+        it("does not render close button if isCloseButtonShown={false}", () => {
+            render(
+                <Drawer isCloseButtonShown={false} isOpen={true} title="Hello!" usePortal={false}>
+                    drawer body
+                </Drawer>,
+            );
+            assert.isNull(screen.queryByRole("button", { name: "Close" }));
         });
     });
 
     it("only adds its className in one location", () => {
-        mountDrawer(<Drawer className="foo" isOpen={true} title="title" usePortal={false} />);
-        assert.lengthOf(drawer.find(".foo").hostNodes(), 1);
+        const { container } = render(<Drawer className="foo" isOpen={true} title="title" usePortal={false} />);
+        const elements = container.querySelectorAll(".foo");
+        assert.lengthOf(elements, 1);
     });
 
     // everything else about Drawer is tested by Overlay
